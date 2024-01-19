@@ -1,0 +1,14 @@
+{# dichiaro che questo file estendera il file madre #}
+{% extends 'base.html.twig' %}
+
+{# richiamo i blocco di codice per estendere il file madre #}
+{% block body %}
+	<div>
+		<h2>Il messaggio e:</h2>
+		<storng>{{xxx.message}}</strong>
+		{{ include('main/_variabili.html.twig',  {message:  xxx}) }}
+
+
+	</div>
+
+{% endblock %}

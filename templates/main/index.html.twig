@@ -1,0 +1,23 @@
+{# dichiaro che questo file estendera il file madre #}
+{% extends 'base.html.twig' %}
+
+{# richiamo i blocco di codice per estendere il file madre #}
+{% block body %}
+
+	{% if variabili|length > 0  %}
+		{% for key,variabile in variabili|slice(0, limit) %}
+			<div>
+				<a href=" {{ path('app_show_one', {id: key}) }} ">{{variabile.message}}</a>
+			</div>
+
+			{{ include('main/_variabili.html.twig', {message:  variabile}) }}
+		{% endfor %}
+	{% else %}
+		<h2>Non ci sono saluti</h2>
+	{% endif %}
+
+{% endblock %}
+
+
+{% block title %}Ho cambiato il titolo
+{% endblock %}
