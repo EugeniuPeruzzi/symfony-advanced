@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tutti i post
+{% endblock %}
+
+{% block body %}
+	<div>
+		<h1>{{ microPost.title }}</h1>
+		<div>
+			{{ microPost.text }}
+		</div>
+		{% if  date(microPost.datetime) < date('-1year') %}
+			Vecchio di 1 anno
+		{% else %}
+			{{microPost.datetime|date('d/m/Y')}}
+		{% endif %}
+	</div>
+
+{% endblock %}

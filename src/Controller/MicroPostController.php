@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class MicroPostController extends AbstractController
 {
@@ -44,23 +45,39 @@ class MicroPostController extends AbstractController
         // $microPost = $posts->find(2);
         // $entityManager->remove($microPost);
         // $entityManager->flush();
-        $posts->findAll();
 
         // ritorna alla vista 
         return $this->render('micro_post/index.html.twig', [
-            'controller_name' => 'MicroPostController',
+            'posts' => $posts->findAll()
         ]);
     }
 
-    
+
     #[Route('/micro-post/{id}', name: 'app_micro_post_show')]
     public function showOne($id, MicroPostRepository $microPostRepository): Response
     {
         $microPost = $microPostRepository->find($id);
-        dd($microPost);
+        // dd($microPost);
         // Ora hai l'oggetto $microPost e puoi passarlo alla tua vista
         return $this->render('micro_post/show.html.twig', [
             'microPost' => $microPost,
+        ]);
+    }
+
+
+    #[Route('/micro-post/new', name: 'app_micro_post_new', priority: 2)]
+    public function add() : Response {
+
+        $microPost = new MicroPost();
+        
+        $form = $this->createFormBuilder($microPost)
+            ->add('title')
+            ->add('text')
+            ->add('submit', SubmitType::class, ['label' => 'save'])
+            ->getForm();
+
+        return $this->render( 'micro_post/new.html.twig', [
+            'form' => $form
         ]);
     }
 }
