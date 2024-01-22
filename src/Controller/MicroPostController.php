@@ -44,11 +44,23 @@ class MicroPostController extends AbstractController
         // $microPost = $posts->find(2);
         // $entityManager->remove($microPost);
         // $entityManager->flush();
-
+        $posts->findAll();
 
         // ritorna alla vista 
         return $this->render('micro_post/index.html.twig', [
             'controller_name' => 'MicroPostController',
+        ]);
+    }
+
+    
+    #[Route('/micro-post/{id}', name: 'app_micro_post_show')]
+    public function showOne($id, MicroPostRepository $microPostRepository): Response
+    {
+        $microPost = $microPostRepository->find($id);
+        dd($microPost);
+        // Ora hai l'oggetto $microPost e puoi passarlo alla tua vista
+        return $this->render('micro_post/show.html.twig', [
+            'microPost' => $microPost,
         ]);
     }
 }
