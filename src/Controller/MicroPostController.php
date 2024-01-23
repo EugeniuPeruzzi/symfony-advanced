@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\MicroPost;
+use App\Form\CommentType;
 use App\Form\MicroPostType;
+use App\Repository\CommentRepository;
 use App\Repository\MicroPostRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -137,4 +140,41 @@ class MicroPostController extends AbstractController
             'form' => $form->createView(), // Passa la vista del form al template Twig
         ]);
     }
+
+    #[Route('/micro-post/comment/{id}', name: 'app_micro_post_comment')]
+    public function addComment(MicroPost $microPost, Request $request, EntityManagerInterface $entityManager, CommentRepository $comments): Response
+    {
+
+        // Creazione di un form per gestire l'input dell'utente
+        $form = $this->createForm(CommentType::class, new Comment());
+    
+        // Gestione della richiesta HTTP per il form
+        $form->handleRequest($request);
+    
+        // Verifica se il form è stato inviato e se i dati sono validi
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Ottieni i dati dal form
+            $comment = $form->getData();
+            $comment->setPost($microPost);
+            // Persisti l'oggetto MicroPost nel database
+            $entityManager->persist($comment);
+            
+            // Esegui la sincronizzazione delle modifiche nel database
+            $entityManager->flush();
+            
+            //Aggiungiamo un flash e un messagio di verifica che puo essere renderizzato nella view
+            $this->addFlash('success', 'Commento creato con successo');
+
+            // Redirect a una pagina successiva alla creazione del MicroPost (aggiungi un URL appropriato)
+            return $this->redirectToRoute('app_micro_post');
+        }
+    
+        // Renderizza la pagina del form
+        return $this->render('micro_post/comment.html.twig', [
+            'form' => $form->createView(), // Passa la vista del form al template Twig
+            'post' => $microPost
+            
+        ]);
+    }
+
 }
