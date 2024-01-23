@@ -25,6 +25,11 @@
 					<div class="text-sm text-gray-500 dark:text-gray">
 						<a href="#">user@mail.com</a>
 					</div>
+					<div>
+						<a href="{{ path('app_micro_post_edit', {id: post.id}) }}">
+							Edit
+						</a>
+					</div>
 				</div>
 				{# {{ include('main/_variabili.html.twig', {message:  variabile}) }} #}
 			{% endfor %}
