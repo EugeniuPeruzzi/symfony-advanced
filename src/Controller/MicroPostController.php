@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\MicroPost;
+use App\Form\MicroPostType;
 use App\Repository\MicroPostRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -68,16 +69,11 @@ class MicroPostController extends AbstractController
     #[Route('/micro-post/new', name: 'app_micro_post_new', priority: 2)]
     public function add(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // Creazione di un nuovo oggetto MicroPost
-        $microPost = new MicroPost();
+        // // Creazione di un nuovo oggetto MicroPost
+        // $microPost = new MicroPost();
     
         // Creazione di un form per gestire l'input dell'utente
-        $form = $this->createFormBuilder($microPost)
-            ->add('title')
-            ->add('text')
-            // ->add('submit', SubmitType::class, ['label' => 'save'])
-            ->getForm();
-    
+        $form = $this->createForm(MicroPostType::class, new MicroPost);
         // Gestione della richiesta HTTP per il form
         $form->handleRequest($request);
     
@@ -113,11 +109,7 @@ class MicroPostController extends AbstractController
     {
 
         // Creazione di un form per gestire l'input dell'utente
-        $form = $this->createFormBuilder($microPost )
-            ->add('title')
-            ->add('text')
-            // ->add('submit', SubmitType::class, ['label' => 'save'])
-            ->getForm();
+        $form = $this->createForm(MicroPostType::class, $microPost);
     
         // Gestione della richiesta HTTP per il form
         $form->handleRequest($request);
