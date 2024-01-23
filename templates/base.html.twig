@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="dark">
 	<head>
 		<meta charset="UTF-8">
 		<title>
@@ -8,19 +8,36 @@
 		</title>
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>"> {% block stylesheets %}{% endblock %}
 		{# <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> #}
-		{% block javascripts %}
-			{% block importmap %}
-				{{ importmap('app') }}
-			{% endblock %}
-		{% endblock %}
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script>
+			tailwind.config = {
+darkMode: 'class'
+}
+		</script>
 	</head>
-	<body>
-		<h1>Welcome to Symfony</h1>
-		{% for message in app.flashes('success') %}
-			<div style="color: green">{{message}}</div>
-		{% endfor %}
-		{% block body %}
-			{# qui dentro andrano dinamicamente tutti i file che avranno questo "blocco" importato neiu file. #}
-		{% endblock %}
+	<body class="dg-gray-100 text-gray-800 m-10 dark:bg-gray-800 dark:text-white">
+		<div class="w-full md:w-2/3 mx-auto mb-4 flex justify-between items-center">
+			<div class="text-4xl">
+				<a href="{{ path('app_micro_post')}}">Home</a>
+				{% block bread %}{% endblock %}
+
+			</div>
+
+			<div class="text-right">
+				<div class="text-sm text-gray-400 dark:text-gray-500">
+					Login & Regs
+				</div>
+			</div>
+		</div>
+
+		<div class="w-full md:w-2/3 mx-auto">
+			{% for message in app.flashes('success') %}
+				<div class="rounded-md p-2 border-green-300 bg-green-500 border dark:border-green-600 dark:bg-green-700 dark:text-white mb-4">{{message}}</div>
+			{% endfor %}
+
+			{% block body %}
+				{# qui dentro andrano dinamicamente tutti i file che avranno questo "blocco" importato neiu file. #}
+			{% endblock %}
+		</div>
 	</body>
 </html>
