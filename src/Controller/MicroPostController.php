@@ -144,8 +144,7 @@ class MicroPostController extends AbstractController
     #[Route('/micro-post/comment/{id}', name: 'app_micro_post_comment')]
     public function addComment(MicroPost $microPost, Request $request, EntityManagerInterface $entityManager, CommentRepository $comments): Response
     {
-
-        // Creazione di un form per gestire l'input dell'utente
+        // Creazione di un form per la gestione dei commenti
         $form = $this->createForm(CommentType::class, new Comment());
     
         // Gestione della richiesta HTTP per il form
@@ -155,26 +154,30 @@ class MicroPostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Ottieni i dati dal form
             $comment = $form->getData();
+    
+            // Associa il commento al MicroPost corrente
             $comment->setPost($microPost);
-            // Persisti l'oggetto MicroPost nel database
+    
+            // Persisti il commento nel database
             $entityManager->persist($comment);
-            
+    
             // Esegui la sincronizzazione delle modifiche nel database
             $entityManager->flush();
-            
-            //Aggiungiamo un flash e un messagio di verifica che puo essere renderizzato nella view
+    
+            // Aggiungi un messaggio di successo alla sessione Flash
             $this->addFlash('success', 'Commento creato con successo');
-
-            // Redirect a una pagina successiva alla creazione del MicroPost (aggiungi un URL appropriato)
+    
+            // Redirect alla pagina principale dei MicroPost (aggiungi l'URL appropriato)
             return $this->redirectToRoute('app_micro_post');
         }
     
-        // Renderizza la pagina del form
-        return $this->render('micro_post/comment.html.twig', [
-            'form' => $form->createView(), // Passa la vista del form al template Twig
+        // Renderizza la pagina dei commenti con il form e il MicroPost corrente
+        return $this->render('micro_post/comment.html.twig', 
+        [
+            'form' => $form->createView(),
             'post' => $microPost
-            
         ]);
     }
+    
 
 }
