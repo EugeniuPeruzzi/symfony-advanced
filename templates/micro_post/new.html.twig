@@ -3,6 +3,11 @@
 {% block title %}Aggiungi un post
 {% endblock %}
 
+{% block bread %}
+	->New
+{% endblock %}
+
+
 {% block body %}
 	{{ include('micro_post/_form.html.twig') }}
 {% endblock %}
