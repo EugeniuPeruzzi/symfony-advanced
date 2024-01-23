@@ -32,14 +32,14 @@ class MainController extends AbstractController{
     #[Route('/', name: 'app_index')]
         public function index(UserProfileRepository $profiles, EntityManagerInterface $entityManager): Response {
 
-            $user = new User();
-            $user->setEmail('email@email.com');
-            $user->setPassword('12345678');
+            // $user = new User();
+            // $user->setEmail('email@email.com');
+            // $user->setPassword('12345678');
 
-            $profile = new UserProfile();
-            $profile->setUser($user);
-            $entityManager->persist($profile);
-            $entityManager->flush();
+            // $profile = new UserProfile();
+            // $profile->setUser($user);
+            // $entityManager->persist($profile);
+            // $entityManager->flush();
 
             // $profile = $profiles->find(1);
             // $profiles->remove($profile, true);
