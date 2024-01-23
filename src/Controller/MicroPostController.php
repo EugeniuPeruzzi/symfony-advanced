@@ -94,7 +94,10 @@ class MicroPostController extends AbstractController
             
             // Esegui la sincronizzazione delle modifiche nel database
             $entityManager->flush();
-    
+            
+            //Aggiungiamo un flash e un messagio di verifica che puo essere renderizzato nella view
+            $this->addFlash('success', 'generato con successo');
+
             // Redirect a una pagina successiva alla creazione del MicroPost (aggiungi un URL appropriato)
             return $this->redirectToRoute('app_micro_post');
         }

@@ -16,6 +16,9 @@
 	</head>
 	<body>
 		<h1>Welcome to Symfony</h1>
+		{% for message in app.flashes('success') %}
+			<div style="color: green">{{message}}</div>
+		{% endfor %}
 		{% block body %}
 			{# qui dentro andrano dinamicamente tutti i file che avranno questo "blocco" importato neiu file. #}
 		{% endblock %}
