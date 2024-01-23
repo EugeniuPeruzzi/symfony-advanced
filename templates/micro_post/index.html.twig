@@ -4,15 +4,33 @@
 {% endblock %}
 
 {% block body %}
+	<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+		{% if posts|length > 0  %}
+			{% for key,post in posts %}
+				<div class="mb-4">
+					<div class="text-2xl">
+						<a href=" {{ path('app_micro_post_show', {id: post.id}) }} ">{{post.title}}</a>
+					</div>
+					<div calss="text-xl dark:text-gray-400">
+						{{post.text}}
+					</div>
+					<div calss="text-grey-500 dark:text-gray-400">
+						{{post.datetime | date('M j, Y')}}
+					</div>
+					<div>
+						<a href="#">Like
+							<span class="px-2 roundend-md bg-gray-200 dark:bg-gray-700">0</span>
+						</a>
+					</div>
+					<div class="text-sm text-gray-500 dark:text-gray">
+						<a href="#">user@mail.com</a>
+					</div>
+				</div>
+				{# {{ include('main/_variabili.html.twig', {message:  variabile}) }} #}
+			{% endfor %}
+		{% else %}
+			<h2>Non ci sono saluti</h2>
+		{% endif %}
 
-	{% if posts|length > 0  %}
-		{% for key,post in posts %}
-			<div>
-				<a href=" {{ path('app_micro_post_show', {id: post.id}) }} ">{{post.title}}</a>
-			</div>
-			{# {{ include('main/_variabili.html.twig', {message:  variabile}) }} #}
-		{% endfor %}
-	{% else %}
-		<h2>Non ci sono saluti</h2>
-	{% endif %}
+	</div>
 {% endblock %}
