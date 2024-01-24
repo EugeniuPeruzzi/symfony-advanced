@@ -21,6 +21,23 @@ class MicroPostRepository extends ServiceEntityRepository
         parent::__construct($registry, MicroPost::class);
     }
 
+/**
+ * Trova tutte le entità Post con i relativi commenti.
+ *
+ * @return array Un array contenente tutte le entità Post con i relativi commenti.
+ */
+public function findAllWithComments(): array {
+    // Crea una query builder per l'entità 'Post' con alias 'p'
+    return $this->createQueryBuilder('p')
+        // Esegue un join con l'entità 'Comment' utilizzando l'alias 'c'
+        ->leftJoin('p.comments', 'c')
+        // Ordina i risultati in base alla data di creazione della post in ordine decrescente
+        ->orderBy('p.datetime', 'DESC')
+        // Esegue la query e restituisce il risultato come un array
+        ->getQuery()
+        ->getResult();
+}
+
 //    /**
 //     * @return MicroPost[] Returns an array of MicroPost objects
 //     */

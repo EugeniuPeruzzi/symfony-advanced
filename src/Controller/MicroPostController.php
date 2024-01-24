@@ -53,7 +53,7 @@ class MicroPostController extends AbstractController
 
         // ritorna alla vista 
         return $this->render('micro_post/index.html.twig', [
-            'posts' => $posts->findAll()
+            'posts' => $posts->findAllWithComments()
         ]);
     }
 
