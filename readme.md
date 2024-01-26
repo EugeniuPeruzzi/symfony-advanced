@@ -48,7 +48,7 @@ in bereve per fare un controller: `symfony console make:controller` o altri.
 
 
 ### Profiler Pack
-[!ATTENTION] - NON VA INSTALLATO NELLA PRODUZIONE!!!!
+**[!ATTENTION]** - NON VA INSTALLATO NELLA PRODUZIONE!!!!
 
 Ti genera una toolbar che di da informzioni sui stati della tua pagina che stai creando con diversi dati di telimetria.
 
@@ -58,7 +58,7 @@ per installarlo : `composer require --dev symfony/profiler-pack`
 
 Doctrine e un ORM pack che serve per la comunicazione con il database, quindi al posto di usare le classiche sql querry sara doctrine ad occuparsi di tutto cio, in Laravel -> Eloquent in Java -> Hibernate.
 
-> [!TIP] - DOCTRINE E GIA INSTALLATO DI DEFAUL COME APP IN SYMFONY 7+ 
+**[!TIP]** - DOCTRINE E GIA INSTALLATO DI DEFAUL COME APP IN SYMFONY 7+ 
 per installare: `composer require symfony/orm-pack`
 
 una volta installato l'orm pack creamo il file : `docke-compose.yml` e inseriamo dentro questo snipet per dirgli i dati del db da utilizzare.
@@ -86,17 +86,16 @@ services:
 fatto tutto, fai partire docker desktop oppure usa estensione di vsc e fai partire il comando :
 `docker compose up`
 
-> [!question] Can callouts be nested?
-> > [!todo] Yes!, they can.
-> > > [!example]  You can even use multiple layers of nesting.
 
-********** piccolo errore docker andava in confusione con i file creati da symfony : compose.ymale e il file creato da me docker-compose.yml. azione presa -----> cancellazione 	**************
+piccolo errore docker andava in confusione con i file creati da symfony : `compose.yaml` e il file creato da me `docker-compose.yml`. azione presa -----> cancellazione di `compose.yaml`
 
 una volta avviato il server impostiamo il file .env 
 quindi impostiamo DATABASE_URL: 
 
 
-`#DATABASE_URL="{tipo di db: mysql/postgre/sqlite ecc..}://{NOMEDATABASE}:{PASSWORD DATABASE}@127.0.0.1:{porta del database dichiarate nel file di docker}/{nome db}?serverVersion={versione del db usate sempre specificata in docker-compose}&charset=utf8mb4"`
+```env
+#DATABASE_URL="{tipo di db: mysql/postgre/sqlite ecc..}://{NOMEDATABASE}:{PASSWORD DATABASE}@127.0.0.1:{porta del database dichiarate nel file di docker}/{nome db}?serverVersion={versione del db usate sempre specificata in docker-compose}&charset=utf8mb4"
+```
 
 poi andiamo nel file doctrine.yaml e decomentiamo la voce: `server_version` e mettiamo la versione del server che usiamo
  fatto tutto questo creamo il data base.
