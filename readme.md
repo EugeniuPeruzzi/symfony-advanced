@@ -50,7 +50,7 @@ Per velocizzare la crezione dei controller o file in generale, symfony lascia a 
 *******
 
 ### Profiler Pack
-**[!ATTENTION]** - NON VA INSTALLATO NELLA PRODUZIONE!!!!
+__*!ATTENTION*__ - NON VA INSTALLATO NELLA PRODUZIONE!!!!
 
 Ti genera una toolbar che di da informzioni sui stati della tua pagina che stai creando con diversi dati di telimetria.
 
@@ -62,7 +62,7 @@ per installarlo : `composer require --dev symfony/profiler-pack`
 
 Doctrine e un ORM pack che serve per la comunicazione con il database, quindi al posto di usare le classiche sql querry sara doctrine ad occuparsi di tutto cio, in Laravel -> Eloquent in Java -> Hibernate.
 
-**[!TIP]** - DOCTRINE E GIA INSTALLATO DI DEFAUL COME APP IN SYMFONY 7+ 
+__*!TIP*__ - DOCTRINE E GIA INSTALLATO DI DEFAUL COME APP IN SYMFONY 7+ 
 per installare: `composer require symfony/orm-pack`
 
 una volta installato l'orm pack creamo il file : `docke-compose.yml` e inseriamo dentro questo snipet per dirgli i dati del db da utilizzare.
@@ -87,10 +87,9 @@ services:
       - 8080:8080
 ```
 
-fatto tutto, fai partire docker desktop oppure usa estensione di vsc e fai partire il comando :
-`docker compose up`
+fatto tutto, fai partire docker desktop oppure usa estensione di vsc e fai partire il comando : `docker compose up`
 
-> ### *errore* Docker andava in confusione con i file 
+> ### __*errore*__ Docker andava in confusione con i file 
 > - creati da symfony `compose.yaml`
 > - file creato da me `docker-compose.yml`. 
 > azione presa => cancellazione di `compose.yaml`
@@ -106,49 +105,51 @@ poi andiamo nel file doctrine.yaml e decomentiamo la voce `server_version` e met
 
 ### Creazione delle entita/tabelle
 
-per creare le entita/TABELE utiliaziamo il comando `symfony console make:entity`
-e poi seguamo tutte le indicazioni per creare le colone farle nullable e atribuirne il tipo (stringa, numero, data ecc...)
-una volta creata la tabella con i suoi file andiamo a fare la migration usanto il commando :`symfony console make:migration`
-fatto il file di migrazione lo spediamo al db con :
-
-**[!TIP]** - ##### Debugger
-symfony console doctrine:migrations:status
+- creare le entita/TABELE utiliaziamo il comando `symfony console make:entity`
+    - segiamo tutte le indicazioni per creare le colone farle nullable e atribuirne il tipo (stringa, numero, data ecc...)
+- creata la tabella con le sue collone andiamo a fare la migration usanto il commando :`symfony console make:migration`
+- fatto il file di migrazione lo spediamo al db con : `symfony console doctrine:migrations:migrate`
 
 
-`symfony console doctrine:migrations:migrate`
+##### Debuger __*TIP*__
+`symfony console doctrine:migrations:status`
+
+********
 
 ### Fixture Bundle
-Fixture e l'equivalente di faker, per isntallarla diamo comando :
-`composer require --dev orm-fixtures`
+- Fixture e l'equivalente di faker, per isntallarla diamo comando : `composer require --dev orm-fixtures`
+    - una volta inserite le fixture carichiamole con il comando: `symfony console doctrine:fixture:load`
 
-una volta inserito le fixture carichiamole con il comando:
-`symfony console doctrine:fixture:load`
-					
-					ONE TO ONE RELATION
+********
 
-`symfony console make:entity`
-e poi inserisco il nome dell'entita esistente debole
-dichiariamo la tipologgia di relazione e poi seguiamo tutti gli input della console.
-al termine si fa la migrazione:
-`symfony console doctrine:migrations:migrate`
+### One to one relation
+
+1. Creamo l'entita `symfony console make:entity`
+    - poi inseriamo il nome dell'entita esistente debole
+    - Ci verra chiesto il nome della nuova collona e la tipologgia di relazione che in qeusto caso inseriamo `One to one` 
+        - poi seguiamo tutti gli input della console.
+2. Al termine si fa la migrazione: `symfony console doctrine:migrations:migrate`
+
+*******
+
+### One to many relation
+
+1. Creamo l'entita `symfony console make:entity`
+    - poi inseriamo il nome dell'entita esistente debole
+    - Ci verra chiesto il nome della nuova collona e la tipologgia di relazione che in qeusto caso inseriamo `One to Many` 
+        - poi seguiamo tutti gli input della console.
+2. Al termine si fa la migrazione: `symfony console doctrine:migrations:migrate`
 
 
-					ONE TO MANY RELATION
+********
 
-`symfony console make:entity`
-e poi inserisco il nome dell'entita esistente debole
-dichiariamo la tipologgia di relazione e poi seguiamo tutti gli input della console.
-al termine si fa la migrazione:
-`symfony console doctrine:migrations:migrate`
+### Personalizzazione dei commandi in console
 
+1. `symfony console make:command`
+    - ci verra chiesto dalla console come procedere e che nome atribuirli come ad esempio: `app:create-user`
+2. Verra generato un file nella cartella `src/Command/{nome del commando}.php` dove andremo a personalizzare il tutto 
 
-				CREAZIONE COMANDI PERSONALIZZATI NELLA CONSOLE
-
-`symfony console make:command`
-creamo un comando personalizzato poi nel imput inseriamo ad esempio:
-`app:create-user`
-Andra a generare un file con tutti i dati contenuti del comando.
-vedi repo src/Command/CreateUserCommand.php
+- __*TIP*__ Vedi repo src/Command/CreateUserCommand.php
 
 
 
