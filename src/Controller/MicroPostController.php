@@ -93,9 +93,6 @@ class MicroPostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Ottieni i dati dal form
             $microPost = $form->getData();
-    
-            // Imposta la data e l'ora corrente
-            $microPost->setDatetime(new DateTime());
 
             //atribuiamo al post l'utente che lo sta pubblicando.
             $microPost->setAuthor($this->getUser());
@@ -172,7 +169,7 @@ class MicroPostController extends AbstractController
             $comment->setPost($microPost);
 
             //atribuiamo al commento l'utente che lo sta pubblicando.
-            $microPost->setAuthor($this->getUser());
+            $comment->setAuthor($this->getUser());
     
             // Persisti il commento nel database
             $entityManager->persist($comment);
