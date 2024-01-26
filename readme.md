@@ -11,6 +11,8 @@ controliamo se abbiamo PHP installato usando il commando `php -v` per verificare
 
 -------------------   SOLO PER MACCHINE NUOVE   -------------------  
 
+********
+
 ### Creazione del nuovo progetto
 
 Tipica Web APP
@@ -28,24 +30,24 @@ una volta installato tutto verifichiamo di essere all'interno della cartella `cd
 **BEST PRACTIVE**
 `symfony check:security` ------ >  se il serve gira andiamo a vedere se e tutto regolare al livello di sicurezza
 
-
-
+*********
 
 ### Copiare un projetto esistente e attivare Sympfony
 
 classica procedure per clonare la cartella su git hub, poi nella cartella del progetto `composer install` poi modifichi il classico solito file .env 
 
+*********
 
 ### Maker bundle
 
 Per velocizzare la crezione dei controller o file in generale, symfony lascia a disposizione i cosidetti Bundle:
 
-prima bisogna installarli con : `composer require --dev symfony/maker-bundle`
+- bisogna installarli con : `composer require --dev symfony/maker-bundle`
+    - vedere tutti i comandi : `symfony console list make`
+    - in bereve per fare un controller: `symfony console make:controller` o altri.
 
-per vedere tutti i comandi : `symfony console list make`
 
-in bereve per fare un controller: `symfony console make:controller` o altri.
-
+*******
 
 ### Profiler Pack
 **[!ATTENTION]** - NON VA INSTALLATO NELLA PRODUZIONE!!!!
@@ -53,6 +55,8 @@ in bereve per fare un controller: `symfony console make:controller` o altri.
 Ti genera una toolbar che di da informzioni sui stati della tua pagina che stai creando con diversi dati di telimetria.
 
 per installarlo : `composer require --dev symfony/profiler-pack`
+
+*******
 
 ### Installazione di doctrine
 
@@ -86,43 +90,34 @@ services:
 fatto tutto, fai partire docker desktop oppure usa estensione di vsc e fai partire il comando :
 `docker compose up`
 
+> ### *errore* Docker andava in confusione con i file 
+> - creati da symfony `compose.yaml`
+> - file creato da me `docker-compose.yml`. 
+> azione presa => cancellazione di `compose.yaml`
 
-piccolo errore docker andava in confusione con i file creati da symfony : `compose.yaml` e il file creato da me `docker-compose.yml`. azione presa -----> cancellazione di `compose.yaml`
-
-una volta avviato il server impostiamo il file .env 
-quindi impostiamo DATABASE_URL: 
-
-
-```env
+una volta avviato il server impostiamo il file .env quindi impostiamo DATABASE_URL: 
+```
 #DATABASE_URL="{tipo di db: mysql/postgre/sqlite ecc..}://{NOMEDATABASE}:{PASSWORD DATABASE}@127.0.0.1:{porta del database dichiarate nel file di docker}/{nome db}?serverVersion={versione del db usate sempre specificata in docker-compose}&charset=utf8mb4"
 ```
-
-poi andiamo nel file doctrine.yaml e decomentiamo la voce: `server_version` e mettiamo la versione del server che usiamo
- fatto tutto questo creamo il data base.
-
+poi andiamo nel file doctrine.yaml e decomentiamo la voce `server_version` e mettiamo la versione del server che usiamo fatto tutto questo creamo il data base
 `symfony console doctrine:database:create`.
 
-						CREAZIONE DELLE ENTITA/TABELE:
+******
 
-per creare le entita/TABELE utiliaziamo il comando :
+### Creazione delle entita/tabelle
 
-`symfony console make:entity`
-
+per creare le entita/TABELE utiliaziamo il comando `symfony console make:entity`
 e poi seguamo tutte le indicazioni per creare le colone farle nullable e atribuirne il tipo (stringa, numero, data ecc...)
-
-una volta creata la tabella con i suoi file andiamo a fare la migration usanto il commando :
-
-`symfony console make:migration`
-
+una volta creata la tabella con i suoi file andiamo a fare la migration usanto il commando :`symfony console make:migration`
 fatto il file di migrazione lo spediamo al db con :
 
-****** debuggger ******
+**[!TIP]** - ##### Debugger
 symfony console doctrine:migrations:status
-****** debuggger ******
+
 
 `symfony console doctrine:migrations:migrate`
 
-						FIXTURE BUNDLE:
+### Fixture Bundle
 Fixture e l'equivalente di faker, per isntallarla diamo comando :
 `composer require --dev orm-fixtures`
 
