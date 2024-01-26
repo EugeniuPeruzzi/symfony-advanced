@@ -25,12 +25,15 @@ darkMode: 'class'
 
 			<div class="text-right">
 				<div class="text-sm text-gray-400 dark:text-gray-500">
-					<div>
-						<a href="{{ path('app_login') }}">Login</a>
-					</div>
-					<div>
-						<a href="{{ path('app_micro_post_new') }}">Add New Post</a>
-					</div>
+					{% if app.user %}
+						<div>
+							<a href="{{ path('app_micro_post_new') }}">Add New Post</a>
+						</div>
+					{% else %}
+						<div>
+							<a href="{{ path('app_login') }}">Login</a>
+						</div>
+					{% endif %}
 				</div>
 			</div>
 		</div>

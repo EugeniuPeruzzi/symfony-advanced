@@ -87,7 +87,9 @@ class MicroPostController extends AbstractController
     
             // Imposta la data e l'ora corrente
             $microPost->setDatetime(new DateTime());
-    
+
+            //atribuiamo al post l'utente che lo sta pubblicando.
+            $microPost->setAuthor($this->getUser());
             // Persisti l'oggetto MicroPost nel database
             $entityManager->persist($microPost);
             
@@ -157,6 +159,9 @@ class MicroPostController extends AbstractController
     
             // Associa il commento al MicroPost corrente
             $comment->setPost($microPost);
+
+            //atribuiamo al commento l'utente che lo sta pubblicando.
+            $microPost->setAuthor($this->getUser());
     
             // Persisti il commento nel database
             $entityManager->persist($comment);
