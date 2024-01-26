@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class MicroPostController extends AbstractController
 {
@@ -70,8 +71,16 @@ class MicroPostController extends AbstractController
     }
 
     #[Route('/micro-post/new', name: 'app_micro_post_new', priority: 2)]
+    // Questa riga sotto ha la stessa funzionalita delle riga 79 solo che e piu restrittiva
+    // #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function add(Request $request, EntityManagerInterface $entityManager): Response
     {
+        //questo snipet di codice protegge la rotta ulr, senza questo se nel url viene inserito l'indirizzo anche un utente non autenticato potra creare post.
+       $this->denyAccessUnlessGranted(
+        'IS_AUTHENTICATED_FULLY'
+        //'PUBLIC_ACCESS'
+    );
+
         // // Creazione di un nuovo oggetto MicroPost
         // $microPost = new MicroPost();
     
@@ -110,6 +119,7 @@ class MicroPostController extends AbstractController
     }
     
     #[Route('/micro-post/edit/{id}', name: 'app_micro_post_edit')]
+    #[IsGranted('ROLE_EDITOR')]
     public function edit(MicroPost $microPost, Request $request, EntityManagerInterface $entityManager): Response
     {
 
@@ -144,6 +154,7 @@ class MicroPostController extends AbstractController
     }
 
     #[Route('/micro-post/comment/{id}', name: 'app_micro_post_comment')]
+    #[IsGranted('ROLE_COMMENTER')]
     public function addComment(MicroPost $microPost, Request $request, EntityManagerInterface $entityManager, CommentRepository $comments): Response
     {
         // Creazione di un form per la gestione dei commenti
