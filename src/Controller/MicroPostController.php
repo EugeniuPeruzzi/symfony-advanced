@@ -117,7 +117,7 @@ class MicroPostController extends AbstractController
     }
     
     #[Route('/micro-post/edit/{id}', name: 'app_micro_post_edit')]
-    #[IsGranted(MicroPost::EDIT, 'post')]
+    #[IsGranted(MicroPost::EDIT, 'microPost')]
     public function edit(MicroPost $microPost, Request $request, EntityManagerInterface $entityManager): Response
     {
 

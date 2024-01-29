@@ -162,6 +162,30 @@ Poi andiamo nel file doctrine.yaml e decomentiamo la voce `server_version` e met
 2. Verra generato il file dentro security/voter/{NomeFileVoter.php}
 
 
+### Creazione di form di registrazione
+
+1. `symfony console make:registration-form`
+    - Crea un form di registrazione automatico.
+    - Ti viene chiesto dal terminale se vuoi aggiungere una @UniqueEntity validation alla tabella User
+        1. Y
+    - Se vuoi mandare un'email di verifica all'utente dopo la registrazione
+        1. Se dai imput Y ti verra chiesto di installare il mailer bundle.
+Poi segui le altre domande.
+
+2. Fatto il Form andiamo a inserire dentro il nostra file `docker-compose.yml` lo sniper che permettere di utilizzare il mail catcher:
+    - ```yml
+          mailer:
+            image: schickling/mailcatcher
+            ports:
+            - 1080:1080
+            - 1025:1025
+     ```
+3. Configuriamo il file `.env` con: `MAILER_DSN=smtp://0.0.0.0:1025` per ricevere a questa porta le mail
+
+4. Si esegue il comando `docker compose up` e andando a lolcalhost//0.0.0.0:1025 dovremo trovare la pagina del mail catcher.
+
+
+
 
 
 
