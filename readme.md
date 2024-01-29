@@ -153,6 +153,14 @@ Poi andiamo nel file doctrine.yaml e decomentiamo la voce `server_version` e met
 
 - __*TIP*__ Vedi repo src/Command/CreateUserCommand.php
 
+********
+
+### Creazione di Voter
+
+1. `symfony console make:voter`
+    - Il Voter è un meccanismo in Symfony per gestire l'autorizzazione degli utenti in base a determinati criteri.
+2. Verra generato il file dentro security/voter/{NomeFileVoter.php}
+
 
 
 

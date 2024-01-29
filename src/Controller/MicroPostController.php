@@ -60,6 +60,7 @@ class MicroPostController extends AbstractController
 
 
     #[Route('/micro-post/{id}', name: 'app_micro_post_show')]
+    #[IsGranted(MicroPost::VIEW, 'post')]
     public function showOne($id, MicroPostRepository $microPostRepository): Response
     {
         $microPost = $microPostRepository->find($id);
@@ -116,7 +117,7 @@ class MicroPostController extends AbstractController
     }
     
     #[Route('/micro-post/edit/{id}', name: 'app_micro_post_edit')]
-    #[IsGranted('ROLE_EDITOR')]
+    #[IsGranted(MicroPost::EDIT, 'post')]
     public function edit(MicroPost $microPost, Request $request, EntityManagerInterface $entityManager): Response
     {
 
