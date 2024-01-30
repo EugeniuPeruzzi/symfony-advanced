@@ -78,13 +78,13 @@ class MicroPostController extends AbstractController
     {
         //questo snipet di codice protegge la rotta ulr, senza questo se nel url viene inserito l'indirizzo anche un utente non autenticato potra creare post.
        $this->denyAccessUnlessGranted(
-        'IS_AUTHENTICATED_FULLY'
+        'ROLE_WRITER'
         //'PUBLIC_ACCESS'
     );
 
         // // Creazione di un nuovo oggetto MicroPost
         // $microPost = new MicroPost();
-    
+        $request->getUser();
         // Creazione di un form per gestire l'input dell'utente
         $form = $this->createForm(MicroPostType::class, new MicroPost);
         // Gestione della richiesta HTTP per il form
